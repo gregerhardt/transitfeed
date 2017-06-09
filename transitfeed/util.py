@@ -596,9 +596,9 @@ class EndOfLineChecker:
     except StopIteration:
       self._FinalCheck()
       raise
-
+      
     self._line_number += 1
-    m_eol = re.search(r"[\x0a\x0d]*$", next_line)
+    m_eol = re.search(b"[\x0a\x0d]*$", next_line)
     if m_eol.group() == "\x0d\x0a":
       self._crlf += 1
       if self._crlf <= 5:
@@ -617,7 +617,7 @@ class EndOfLineChecker:
         pass
     else:
       self._problems.InvalidLineEnd(
-        codecs.getencoder('string_escape')(m_eol.group())[0],
+        codecs.getencoder('unicode_escape')(m_eol.group())[0],
         (self._name, self._line_number))
     next_line_contents = next_line[0:m_eol.start()]
     for seq, name in list(INVALID_LINE_SEPARATOR_UTF8.items()):

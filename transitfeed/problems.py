@@ -17,7 +17,7 @@
 import logging
 import time
 
-import .util
+from . import util
 from functools import reduce
 
 # Problem types:

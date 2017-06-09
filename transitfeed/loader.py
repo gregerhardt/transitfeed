@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import codecs
-import io as StringIO
+import io 
 import csv
 import os
 import re
@@ -127,7 +127,7 @@ class Loader:
       # Convert and continue, so we can find more errors
       contents = codecs.getdecoder('utf-16')(contents)[0].encode('utf-8')
 
-    null_index = contents.find('\0')
+    null_index = contents.find(b'\0')
     if null_index != -1:
       # It is easier to get some surrounding text than calculate the exact
       # row_num
@@ -151,7 +151,7 @@ class Loader:
     if not contents:
       return
 
-    eol_checker = util.EndOfLineChecker(StringIO.StringIO(contents),
+    eol_checker = util.EndOfLineChecker(io.StringIO(contents),
                                    file_name, self._problems)
     # The csv module doesn't provide a way to skip trailing space, but when I
     # checked 15/675 feeds had trailing space in a header row and 120 had spaces
@@ -286,7 +286,7 @@ class Loader:
     if not contents:
       return
 
-    eol_checker = util.EndOfLineChecker(StringIO.StringIO(contents),
+    eol_checker = util.EndOfLineChecker(io.BytesIO(contents),
                                    file_name, self._problems)
     reader = csv.reader(eol_checker)  # Use excel dialect
 
